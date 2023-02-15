@@ -446,10 +446,4 @@ public class Bank {
    public void setPhone(String phone) {
        this.phone = phone;
    }
-
-
-
-
-
-
 }
