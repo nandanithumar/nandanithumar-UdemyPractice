@@ -1,0 +1,458 @@
+﻿SCHEMA
+
+
+Student        
+Stu_id (PK)                
+Name NN
+ 
+Stu_sub                                                
+Stu_id(FK) NN
+Sub_id(FK) NN
+
+
+Subject
+Sub_id (PK)
+Name NN
+Credit
+
+
+Teacher_subject
+Sub_id(FK)
+Teacher_id(FK)
+
+
+Teacher 
+Teacher_id(PK)
+Name NN
+Phone_no UNIQUE 
+
+
+Sub name where teacher name = ‘xyz’
+
+
+Select subject.name from subject
+Join teacher_subject on subject.sub_id=teacher_subject.sub_id
+Join teacher on teacher.teacher_id=teacher_subject.teacher_id
+where teacher.name=”xyz”
+
+
+Select subject.name from subject
+Join stu_sub on subject.sub_id=stu_sub.sub_id
+Join student on student.stu_id=stu_sub.stu_id
+Group by subject.name
+having  count(student.stu_id)>5;  
+
+
+
+
+==============================================================
+Create tables
+
+
+practiceData> db.stu.insertMany([{stu_id:1, name: 'nnu'},{stu_id:2, name: 'karm'},{stu_id:3,name:'ram'}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("63db47d8df17cd4ed0c651bd"),
+    '1': ObjectId("63db47d8df17cd4ed0c651be"),
+    '2': ObjectId("63db47d8df17cd4ed0c651bf")
+  }
+}
+practiceData> db.stu.find().pretty()
+[
+  { _id: ObjectId("63db47d8df17cd4ed0c651bd"), stu_id: 1, name: 'nnu' },
+  {
+    _id: ObjectId("63db47d8df17cd4ed0c651be"),
+    stu_id: 2,
+    name: 'karm'
+  },
+  { _id: ObjectId("63db47d8df17cd4ed0c651bf"), stu_id: 3, name: 'ram' }
+]
+practiceData> db.stu.find().pretty()
+[
+  { _id: ObjectId("63db47d8df17cd4ed0c651bd"), stu_id: 1, name: 'nnu' },
+  {
+    _id: ObjectId("63db47d8df17cd4ed0c651be"),
+    stu_id: 2,
+    name: 'karm'
+  },
+  { _id: ObjectId("63db47d8df17cd4ed0c651bf"), stu_id: 3, name: 'ram' }
+]
+
+
+
+
+=================================================================
+
+
+practiceData> db.sub.insertMany([{sub_id:1,name:'maths'},{stu_id:2,name:'science'}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("63db48cadf17cd4ed0c651c0"),
+    '1': ObjectId("63db48cadf17cd4ed0c651c1")
+  }
+}
+
+
+================================================================
+
+
+practiceData> db.stu_sub.insertMany([{stu_id:1,sub_id:1},{stu_id:2,sub_id:1},{stu_id:1,sub_id:1}]) ;
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("63db495bdf17cd4ed0c651c2"),
+    '1': ObjectId("63db495bdf17cd4ed0c651c3"),
+    '2': ObjectId("63db495bdf17cd4ed0c651c4")
+  }
+}
+
+
+=================================================================
+
+
+practiceData> db.teacher.insertMany([{tech_id:1,name:"kavita",phone:1234},{tech_id:2,name:"ravina",phone:2345},{tech_id:3,name:"raman",phone:null}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("63db5143df17cd4ed0c651c5"),
+    '1': ObjectId("63db5143df17cd4ed0c651c6"),
+    '2': ObjectId("63db5143df17cd4ed0c651c7")
+  }
+}
+practiceData> 
+
+
+=================================================================
+
+
+practiceData> db.sub_tech.insertMany([{sub_id:1,tech_id:1},{sub_id:2,tech_id:3},{sub_id:1,tech_id:2}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("63db547ddf17cd4ed0c651c8"),
+    '1': ObjectId("63db547ddf17cd4ed0c651c9"),
+    '2': ObjectId("63db547ddf17cd4ed0c651ca")
+  }
+}
+practiceData> 
+
+
+==================================================================
+
+
+Q.1 STUDENT NAME WHERE TEACHER PHONE NO IS NOT NULL
+
+
+db.stu.aggregate(
+ [
+   {
+     $lookup: {
+       from: "stu_sub",
+       localField: "stu_id",
+       foreignField: "stu_id",
+       as: "stu_sub_stu",
+     },
+   },
+   { $unwind: "$stu_sub_stu" },
+   {
+     $lookup: {
+       from: "sub_tech",
+       localField: "stu_sub_stu.sub_id",
+       foreignField: "sub_id",
+       as: "t2",
+     },
+   },
+   { $unwind: "$t2" },
+   {
+     $lookup: {
+       from: "teacher",
+       localField: "t2.tech_id",
+       foreignField: "tech_id",
+       as: "t3",
+     },
+   },
+   { $unwind: "$t3" },
+   { $match: { 't3.phone': { $ne: null } } }
+ ]
+ );
+
+
+—------------------------------------------------------------------------------------------------------------------
+OUTPUT:
+
+
+[
+  {
+    _id: ObjectId("63db47d8df17cd4ed0c651bd"),
+    stu_id: 1,
+    name: 'nnu',
+    stu_sub_stu: { _id: ObjectId("63db495bdf17cd4ed0c651c2"), stu_id: 1, sub_id: 1 },
+    t2: {
+      _id: ObjectId("63db547ddf17cd4ed0c651c8"),
+      sub_id: 1,
+      tech_id: 1
+    },
+    t3: {
+      _id: ObjectId("63db5143df17cd4ed0c651c5"),
+      tech_id: 1,
+      name: 'kavita',
+      phone: 1234
+    }
+  },
+  {
+    _id: ObjectId("63db47d8df17cd4ed0c651bd"),
+    stu_id: 1,
+    name: 'nnu',
+    stu_sub_stu: { _id: ObjectId("63db495bdf17cd4ed0c651c2"), stu_id: 1, sub_id: 1 },
+    t2: {
+      _id: ObjectId("63db547ddf17cd4ed0c651ca"),
+      sub_id: 1,
+      tech_id: 2
+    },
+    t3: {
+      _id: ObjectId("63db5143df17cd4ed0c651c6"),
+      tech_id: 2,
+      name: 'ravina',
+      phone: 2345
+    }
+  },
+  {
+    _id: ObjectId("63db47d8df17cd4ed0c651bd"),
+    stu_id: 1,
+    name: 'nnu',
+    stu_sub_stu: { _id: ObjectId("63db495bdf17cd4ed0c651c4"), stu_id: 1, sub_id: 1 },
+    t2: {
+      _id: ObjectId("63db547ddf17cd4ed0c651c8"),
+      sub_id: 1,
+      tech_id: 1
+    },
+    t3: {
+      _id: ObjectId("63db5143df17cd4ed0c651c5"),
+      tech_id: 1,
+      name: 'kavita',
+      phone: 1234
+    }
+  },
+  {
+    _id: ObjectId("63db47d8df17cd4ed0c651bd"),
+    stu_id: 1,
+    name: 'nnu',
+    stu_sub_stu: { _id: ObjectId("63db495bdf17cd4ed0c651c4"), stu_id: 1, sub_id: 1 },
+    t2: {
+      _id: ObjectId("63db547ddf17cd4ed0c651ca"),
+      sub_id: 1,
+      tech_id: 2
+    },
+    t3: {
+      _id: ObjectId("63db5143df17cd4ed0c651c6"),
+      tech_id: 2,
+      name: 'ravina',
+      phone: 2345
+    }
+  },
+  {
+    _id: ObjectId("63db47d8df17cd4ed0c651be"),
+    stu_id: 2,
+    name: 'karm',
+    stu_sub_stu: { _id: ObjectId("63db495bdf17cd4ed0c651c3"), stu_id: 2, sub_id: 1 },
+    t2: {
+      _id: ObjectId("63db547ddf17cd4ed0c651c8"),
+      sub_id: 1,
+      tech_id: 1
+    },
+    t3: {
+      _id: ObjectId("63db5143df17cd4ed0c651c5"),
+      tech_id: 1,
+      name: 'kavita',
+      phone: 1234
+    }
+  },
+  {
+    _id: ObjectId("63db47d8df17cd4ed0c651be"),
+    stu_id: 2,
+    name: 'karm',
+    stu_sub_stu: { _id: ObjectId("63db495bdf17cd4ed0c651c3"), stu_id: 2, sub_id: 1 },
+    t2: {
+      _id: ObjectId("63db547ddf17cd4ed0c651ca"),
+      sub_id: 1,
+      tech_id: 2
+    },
+    t3: {
+      _id: ObjectId("63db5143df17cd4ed0c651c6"),
+      tech_id: 2,
+      name: 'ravina',
+      phone: 2345
+    }
+  }
+]
+
+
+
+
+
+
+Q.2 STUDENT NAME WHERE SUBJECT NAME = MATHS
+
+
+
+
+db.stu.aggregate([{
+       $lookup: {
+         from: "stu_sub",
+         localField: "stu_id",
+         foreignField: "stu_id",
+         as: "stu_sub_stu1",
+       },
+     },
+     { $unwind: "$stu_sub_stu1" },
+     {
+       $lookup: {
+         from: "sub",
+         localField: "stu_sub_stu1.sub_id",
+         foreignField: "sub_id",
+         as: "t2",
+       },
+     },
+     { $unwind: "$t2" },
+     {$match: { 't2.name': 'maths' } },
+     {$project: {_id:0,name: 1}},
+   {$group:{_id:{name:'$name'}}
+   }])
+—-------------------------------------------------------------------------------------------------------------
+
+
+SOLUTION:
+
+
+[ { _id: { name: 'nnu' } }, { _id: { name: 'karm' } } ]
+
+
+
+
+Q.3 SUPPOSE WE FORGOT TO ADD PRIMARY KEY IN TABLE AND NOW THEY HAVE DUPLICATE ENTRY HOW WE CAN FIX DATA OF THAT TABLE.
+
+
+db.yourCollection.aggregate([
+   {
+     $group: {
+       _id: { yourDuplicateKey: "$yourDuplicateKey" },
+       dups: { $push: "$_id" },
+       count: { $sum: 1 },
+     },
+   },
+   { $match: { count: { $gt: 1 } } },
+ ])
+ .forEach(function (doc) {
+   doc.dups.shift();
+   db.yourCollection.remove({ _id: { $in: doc.dups } });
+ })
+
+
+
+
+
+
+
+
+=================================================================
+
+
+EXTRA: CREATE COLLECTION FOR RESTAURANT 
+
+
+practiceData> db.res.insertMany([{
+...     "address": {
+...        "building": "1007",
+...        "coord": [ -73.856077, 40.848447 ],
+...        "street": "Morris Park Ave",
+...        "zipcode": "10462"
+...     },
+...     "borough": "Bronx",
+...     "cuisine": "Bakery",
+...     "grades": [
+...        { "date": { "$date": 1393804800000 }, "grade": "A", "score": 2 },
+...        { "date": { "$date": 1378857600000 }, "grade": "A", "score": 6 },
+...        { "date": { "$date": 1358985600000 }, "grade": "A", "score": 10 },
+...        { "date": { "$date": 1322006400000 }, "grade": "A", "score": 9 },
+...        { "date": { "$date": 1299715200000 }, "grade": "B", "score": 14 }
+...     ],
+...     "name": "Morris Park Bake Shop",
+...     "restaurant_id": "30075445"
+...   }])
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("63db72c05893bae241269e03") }
+}
+
+
+
+
+Q.1:Write a MongoDB query to display all the documents in the collection restaurant.
+
+
+practiceData> db.res.find().pretty()
+[
+  {
+    _id: ObjectId("63db72c05893bae241269e03"),
+    address: {
+      building: '1007',
+      coord: [ -73.856077, 40.848447 ],
+      street: 'Morris Park Ave',
+      zipcode: '10462'
+    },
+    borough: 'Bronx',
+    cuisine: 'Bakery',
+    grades: [
+      { date: { '$date': 1393804800000 }, grade: 'A', score: 2 },
+      { date: { '$date': 1378857600000 }, grade: 'A', score: 6 },
+      { date: { '$date': 1358985600000 }, grade: 'A', score: 10 },
+      { date: { '$date': 1322006400000 }, grade: 'A', score: 9 },
+      { date: { '$date': 1299715200000 }, grade: 'B', score: 14 }
+    ],
+    name: 'Morris Park Bake Shop',
+    restaurant_id: '30075445'
+  }
+]
+practiceData> 
+
+
+Q.2: Write a MongoDB query to display the fields restaurant_id, name, borough and cuisine for all the documents in the collection restaurant. 
+
+
+db.res.find({},{"restaurant_id" : 1,"name":1,"borough":1,"cuisine" :1});
+
+
+practiceData> db.res.find({},{"restaurant_id" : 1,"name":1,"borough":1,"cuisine" :1});
+[
+  {
+    _id: ObjectId("63db72c05893bae241269e03"),
+    borough: 'Bronx',
+    cuisine: 'Bakery',
+    name: 'Morris Park Bake Shop',
+    restaurant_id: '30075445'
+  }
+]
+practiceData> 
+
+
+
+
+Q.3 Write a MongoDB query to display the fields restaurant_id, name, borough and cuisine, but exclude the field _id for all the documents in the collection restaurant. 
+
+
+
+
+db.res.find({},{"restaurant_id" : 1,"name":1,"borough":1,"cuisine" :1,"_id":0});
+
+
+[
+  {
+    borough: 'Bronx',
+    cuisine: 'Bakery',
+    name: 'Morris Park Bake Shop',
+    restaurant_id: '30075445'
+  }
+]
+practiceData>

@@ -1,0 +1,1013 @@
+﻿OOPS FROM JAVATPOINTS
+final: Java final keyword is used to indicate that a variable holds a constant value. It is used with a variable. It is used to restrict the user from updating the value of the variable.
+finally: Java finally keyword indicates a block of code in a try-catch structure. This block is always executed whether an exception is handled or not.
+abstract: Java abstract keyword is used to declare an abstract class. An abstract class can provide the implementation of the interface. It can have abstract and non-abstract methods.
+finally: Java finally keyword indicates a block of code in a try-catch structure. This block is always executed whether an exception is handled or not.
+new: Java new keyword is used to create new objects.The new keyword is used to allocate memory at runtime. All objects get memory in the Heap memory area.
+private: Java private keyword is an access modifier. It is used to indicate that a method or variable may be accessed only in the class in which it is declared.
+protected: Java protected keyword is an access modifier. It can be accessible within the package and outside the package but through inheritance only. It can't be applied with the class.
+public: Java public keyword is an access modifier. It is used to indicate that an item is accessible anywhere. It has the widest scope among all other modifiers.
+static: Java static keyword is used to indicate that a variable or method is a class method. The static keyword in Java is mainly used for memory management.
+super: Java super keyword is a reference variable that is used to refer to parent class objects. It can be used to invoke the immediate parent class method.
+this: Java this keyword can be used to refer to the current object in a method or constructor.
+
+
+STRING PASSES IN FOR LOOP 
+  
+
+
+
+  
+
+
+
+
+
+
+
+INHERITANCE:
+
+
+  
+
+multiple and hybrid inheritance is supported through interface only. We will learn about interfaces later.
+
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+MULTIPLE INHERITANCE IS NOT SUPPORTED IN JAVA TO REDUCE CODE COMPLEXITY.
+1. class A{  
+2. void msg(){System.out.println("Hello");}  
+3. }  
+4. class B{  
+5. void msg(){System.out.println("Welcome");}  
+6. }  
+7. class C extends A,B{//suppose if it were  
+8.    
+9.  public static void main(String args[]){  
+10.    C obj=new C();  
+11.    obj.msg();//Now which msg() method would be invoked?  
+12. }  
+13. }  
+
+
+
+
+Method Overloading:
+
+
+  
+
+
+
+METHOD OVERRIDING:
+If subclass (child class) has the same method as declared in the parent class, it is known as method overriding in Java 
+
+
+//METHOD NAME IN PARENT CLASS AND CHILD CLASS ARE SAME.
+  
+
+  
+
+  
+
+
+
+SUPER KEYWORD
+The super keyword in Java is a reference variable which is used to refer to an immediate parent class object.
+1.   2.     
+
+
+
+
+
+FINAL:
+ONE TYPE OF CONSTANT
+  
+
+
+
+POLYMORPHISM:
+Polymorphism in Java is a concept by which we can perform a single action in different ways.
+
+
+class Bike{  
+  void run(){System.out.println("running");}  
+}  
+class Splendor extends Bike{  
+  void run(){System.out.println("running safely with 60km");}  
+  
+  public static void main(String args[]){  
+    Bike b = new Splendor();//upcasting  
+    b.run();  
+  }  
+}  
+  
+
+
+
+BINDING
+Connecting a method call to the method body is known as binding.
+
+
+ABSTRACTION:
+Abstraction is a process of hiding the implementation details and showing only functionality to the user.
+The abstract keyword is a non-access modifier, used for classes and methods:
+   * Abstract class: is a restricted class that cannot be used to create objects (to access it, it must be inherited from another class).
+   * 
+Abstract method: can only be used in an abstract class, and it does not have a body. The body is provided by the subclass (inherited from).
+// Abstract class
+abstract class Animal {
+  // Abstract method (does not have a body)
+  public abstract void animalSound();
+  // Regular method
+  public void sleep() {
+    System.out.println("Zzz");
+  }
+}
+
+
+// Subclass (inherit from Animal)
+class Pig extends Animal {
+  public void animalSound() {
+    // The body of animalSound() is provided here
+    System.out.println("The pig says: wee wee");
+  }
+}
+
+
+class Main {
+  public static void main(String[] args) {
+    Pig myPig = new Pig(); // Create a Pig object
+    myPig.animalSound();
+    myPig.sleep();
+  }
+}
+  
+
+
+
+Interfaces
+Another way to achieve abstraction in Java, is with interfaces.
+An interface is a completely "abstract class" that is used to group related methods with empty bodies:
+// Interface
+interface Animal {
+  public void animalSound(); // interface method (does not have a body)
+  public void sleep(); // interface method (does not have a body)
+}
+
+
+// Pig "implements" the Animal interface
+class Pig implements Animal {
+  public void animalSound() {
+    // The body of animalSound() is provided here
+    System.out.println("The pig says: wee wee");
+  }
+  public void sleep() {
+    // The body of sleep() is provided here
+    System.out.println("Zzz");
+  }
+}
+
+
+class Main {
+  public static void main(String[] args) {
+    Pig myPig = new Pig();  // Create a Pig object
+    myPig.animalSound();
+    myPig.sleep();
+  }
+}
+
+
+  
+
+
+
+ENCAPSULATION:
+We can create a fully encapsulated class in Java by making all the data members of the class private. Now we can use setter and getter methods to set and get the data in it.
+File: Student.java
+      1. //A Java class which is a fully encapsulated class.  
+      2. //It has a private data member and getter and setter methods.  
+      3. package com.javatpoint;  
+      4. public class Student{  
+      5. //private data member  
+      6. private String name;  
+      7. //getter method for name  
+      8. public String getName(){  
+      9. return name;  
+      10. }  
+      11. //setter method for name  
+      12. public void setName(String name){  
+      13. this.name=name  
+      14. }  
+      15. }  
+File: Test.java
+      1. \//A Java class to test the encapsulated class.  
+      2. package com.javatpoint;  
+      3. class Test{  
+      4. public static void main(String[] args){  
+      5. //creating instance of the encapsulated class  
+      6. Student s=new Student();  
+      7. //setting value in the name member  
+      8. s.setName("vijay");  
+      9. //getting value of the name member  
+      10. System.out.println(s.getName());  
+      11. }  
+      12. }  
+  
+
+Final and static methods cannot be overridden. A final method means that it cannot be re-implemented by a subclass and Static methods are treated as global by the JVM so there are not bound to an object instance at all.
+1) Checked Exception
+The classes that directly inherit the Throwable class except RuntimeException and Error are known as checked exceptions. For example, IOException, SQLException, etc. Checked exceptions are checked at compile-time.These are the exceptions that are checked at compile time. If some code within a method throws a checked exception, then the method must either handle the exception or it must specify the exception using the throws keyword
+
+
+2) Unchecked Exception
+The classes that inherit the RuntimeException are known as unchecked exceptions. For example,ArithmeticException, NullPointerException, ArrayIndexOutOfBoundsException, etc. Unchecked exceptions are not checked at compile-time, but they are checked at runtime.These are the exceptions that are not checked at compile time. All exceptions are unchecked, so it is not forced by the compiler to either handle or specify the exception.
+
+
+3) Error
+Error is irrecoverable. Some example of errors are OutOfMemoryError, VirtualMachineError
+
+
+INSTANCEOF OPERATOR:
+
+
+The instanceof in java is also known as type comparison operator because it compares the instance with type. It returns either true or false. If we apply the instanceof operator with any variable that has null value, it returns false.
+
+
+      1. class Simple1{  
+      2.  public static void main(String args[]){  
+      3.  Simple1 s=new Simple1();  
+      4.  System.out.println(s instanceof Simple1);//true  
+      5.  }  
+      6. }  
+  
+
+
+
+
+
+      1. class Dog2{  
+      2.  public static void main(String args[]){  
+      3.   Dog2 d=null;  
+      4.   System.out.println(d instanceof Dog2);//false  
+      5.  }  
+      6. }  
+
+
+  
+
+
+
+==================================================================
+
+
+Java Arrays
+Normally, an array is a collection of similar type of elements which has contiguous memory location.
+
+
+Array in Java is index-based, the first element of the array is stored at the 0th index.
+
+
+Single Dimensional Array in Java
+Syntax to Declare an Array in Java
+      1. dataType[] arr; (or)  
+      2. dataType []arr; (or)  
+      3. dataType arr[];  
+Instantiation of an Array in Java
+      1. arrayRefVar=new datatype[size];  
+
+
+class Testarray{
+public static void main(String args[]){
+
+
+int a[]=new int[5];//declaration and instantiation
+a[0]=10;//initialization
+a[1]=20;
+a[2]=70;
+a[3]=40;
+a[4]=50;
+
+
+//printing array
+for(int i=0;i<a.length;i++)//length is the property of array
+System.out.println(a[i]);
+
+
+}}
+
+
+  
+
+
+
+Array in loop
+
+
+//Java Program to print the array elements using for-each loop  
+class Testarray1{  
+public static void main(String args[]){  
+int arr[]={33,3,4,5};  
+//printing array using for-each loop  
+for(int i:arr)  
+System.out.println(i);  
+}}  
+  
+
+
+
+Passing Array to a Method in Java
+
+
+
+
+//Java Program to demonstrate the way of passing an array  
+//to method.  
+class Testarray2{  
+//creating a method which receives an array as a parameter  
+static void min(int arr[]){  
+int min=arr[0];  
+for(int i=1;i<arr.length;i++)  
+ if(min>arr[i])  
+  min=arr[i];  
+  
+System.out.println(min);  
+}  
+  
+public static void main(String args[]){  
+int a[]={33,3,4,5};//declaring and initializing an array  
+min(a);//passing array to method  
+}} 
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+STRING JOINER
+
+
+  
+
+
+
+Java String valueOf() Method
+The String class valueOf() method coverts given type such as int, long, float, double, boolean, char and char array into String.
+
+
+  
+
+
+
+
+
+
+
+import java.util.Scanner;
+import java.util.StringJoiner;
+
+
+public class Main {
+   public static void main(String[] args){
+
+
+       String first="",second="";
+       Scanner sc=new Scanner(System.in);
+       System.out.println("String Operation");
+       System.out.println();
+       System.out.print("Enter the first Sting: ");
+       first=sc.nextLine();
+       System.out.print("Enter the second Sting: ");
+       second=sc.nextLine();
+       System.out.println("The strings are: "+first+" , "+second);
+       System.out.println("The length of the first string is :"+first.length());
+       System.out.println("The length of the second string is :"+second.length());
+       System.out.println("The concatenation of first and second string is :"+first.concat(" "+second));
+       System.out.println("The first character of " +first+" is: "+first.charAt(0));
+       System.out.println("The uppercase of " +first+" is: "+first.toUpperCase());
+       System.out.println("The lowercase of " +first+" is: "+first.toLowerCase());
+       System.out.print("Enter the occurance of a character in "+first+" : ");
+       String str=sc.next();
+       char c=str.charAt(0);
+       System.out.println("The "+c+" occurs at position " + first.indexOf(c)+ " in " + first);
+       System.out.println("The substring of "+first+" starting from index 3 and ending at 6 is: " + first.substring(3,7));
+       System.out.println("Replacing 'a' with 'o' in "+first+" is: "+first.replace('a','o'));
+       boolean check=first.equals(second);
+       if(!check)
+           System.out.println(first + " and " + second + " are not same.");
+       else
+           System.out.println(first + " and " + second + " are same.");
+   }
+}
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+VECTOR
+
+
+  
+
+
+
+ARRAYLIST
+
+
+  
+
+
+
+
+
+LINKEDLIST:
+  
+
+
+
+STACK:
+  
+
+
+
+
+
+
+
+
+
+PRIORITYQUEUE
+  
+
+
+
+DEQUEUE:
+  
+
+
+
+
+
+
+
+
+
+MAP:
+  
+
+
+
+
+
+LINKEDHASHMAP
+  
+
+
+
+
+
+
+
+JAVA REGEX
+  
+
+
+
+INNERCLASS
+  
+
+
+
+
+
+
+
+
+
+ JAVA IO WRITER AND READERlocalhostlocalhostlocalhost    
+FILE WRITER FILE READER      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CHARARRAYWRITER
+
+
+  
+
+
+
+SERIALIZATION:
+  
+
+
+
+
+
+
+
+SOCKET PROGRAMING:
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+URL CONNECTION
+  
+
+
+
+
+
+HTTPURL_CONNECTION
+  
+
+
+
+
+
+
+
+
+
+INETADDRESS
+  
+
+
+
+DATAGRAM SOCKET PACKET
+  
+
+  
+
+
+
+JAVAFX APPLICATIONS
+
+
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafx.scene.control.*;
+
+
+public class Main extends Application {
+   public static void main(String[] args) {
+       launch(args);
+   }
+   @Override
+   public void start(Stage primaryStage){
+       Button bt1=new Button("click mee!");
+       bt1.isDisabled();
+       bt1.setOnAction(new EventHandler<ActionEvent>() {
+           @Override
+           public void handle(ActionEvent event) {
+               System.out.println("hello world");
+           }
+       });
+       bt1.setCancelButton(true);
+       StackPane root= new StackPane();
+       root.getChildren().add(bt1);
+       Scene scene=new Scene(root,600,600);
+       primaryStage.setScene(scene);
+       primaryStage.setTitle("MY FIRST APPLICATION");
+       primaryStage.show();
+
+
+   }
+
+
+
+
+}
+  
+  
+
+
+
+
+
+2D PRACTICE
+import com.sun.media.sound.SoftMixingMixer;
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+
+
+public class D2_Practice extends Application {
+   public static void main(String[] args) {
+       launch(args);
+   }
+
+
+
+
+   @Override
+   public void start(Stage primaryStage) throws Exception {
+       Line l=new Line(0,0,200,200);
+       Rectangle rect=new Rectangle(200,200,40,20);
+       Group root=new Group();
+       root.getChildren().addAll(l, rect);
+       Scene scene=new Scene(root,600,600);
+       primaryStage.setScene(scene);
+       primaryStage.setTitle("2D PRACTICE");
+       primaryStage.show();
+   }
+}
+
+
+  
+
+  
+
+  
+
+
+
+TEXT
+import com.sun.xml.internal.messaging.saaj.soap.impl.TextImpl;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+
+import java.util.Stack;
+
+
+public class TextPractice extends Application {
+   public static void main(String[] args) {
+       launch(args);
+   }
+
+
+   @Override
+   public void start(Stage primaryStage) throws Exception {
+       Text t=new Text("Hello, There...!");
+       t.setFont(Font.font("Arial"));
+       StackPane s =new StackPane();
+       s.getChildren().add(t);
+       Scene s1=new Scene(s,500,500);
+       primaryStage.setTitle("Text Box");
+       primaryStage.setScene(s1);
+       primaryStage.show();
+   }
+}
+ 
+  
+
+
+
+TRANSFORMATION
+(1)TRANSLATE
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Translate;
+import javafx.stage.Stage;
+
+
+
+
+public class Transformation1 extends Application {
+
+
+   @Override
+   public void start(Stage primaryStage) throws Exception {
+       Rectangle r= new Rectangle(0,0,250,100);
+       Rectangle r2= new Rectangle(0,0,250,100);
+       Translate y= new Translate(500,500);
+       r2.getTransforms().add(y);
+       Group g= new Group();
+       g.getChildren().addAll(r,r2);
+       Scene sc=new Scene(g,1000,1000);
+       primaryStage.setScene(sc);
+       primaryStage.show();
+   }
+
+
+   public static void main(String[] args) {
+       launch(args);
+   }
+}
+  
+
+
+
+
+
+
+
+ROTATE
+  
+
+
+
+Animation
+
+
+import javafx.animation.RotateTransition;
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+
+
+
+public class Animation extends Application {
+   @Override
+   public void start(Stage primaryStage) throws Exception {
+       Rectangle r=new Rectangle(400,400,200,200);
+       r.setFill(Color.DARKBLUE);
+       RotateTransition r1= new RotateTransition();
+       r1.setDuration(Duration.millis(1000));
+       r1.setByAngle(360);
+       r1.setCycleCount(10000);
+       r1.setNode(r);
+       r1.play();
+       Group root =new Group();
+       root.getChildren().add(r);
+       Scene s= new Scene(root,1000,1000);
+       primaryStage.setScene(s);
+       primaryStage.show();
+   }
+}
+
+
+  
+
+
+
+
+
+LAYOUT:
+
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+public class Layout1 extends Application {
+
+
+   @Override
+   public void start(Stage primaryStage) throws Exception {
+       Label first_name=new Label("First Name");
+       Label last_name=new Label("Last Name");
+       TextField tf1=new TextField();
+       TextField tf2=new TextField();
+       Button Submit=new Button ("Submit");
+       GridPane root=new GridPane();
+       Scene scene = new Scene(root,400,200);
+       root.addRow(0, first_name,tf1);
+       root.addRow(1, last_name,tf2);
+       root.addRow(2, Submit);
+       primaryStage.setScene(scene);
+       primaryStage.show();
+   }
+   public static void main(String[] args) {
+       launch(args);
+   }
+
+
+}
+
+
+  
+
+
+
+
+
+FLOWPANE:
+tototototototototo  
+
+
+RADIOBUTTON
+  
+PASSWORD
+  
+
+
+
+
+
+
+
+
+
+
+
+r1.setToggleGroup(tg);
+        r2.setToggleGroup(tg);
+        r3.setToggleGroup(tg);HYPERLINK
+  
+
+
+
+FILECHOOSER
+  
+
+
+
+
+
+
+
+
+
+
+PIE CHART
+  
+
+
+
+BARCHART
+  
+
+
+
+
+
+
+
+
+
+BUBBLE CHART
+  
+
+
+
+STACKED CHART
+  
+
+
+
+
+
+
+
+
+CSS
+  
+
+
+
+
+
+EVENT HANDLING
+  
+
+
+
+
+
+
+
+KEYEVENT FILTER
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+PRACTICE:
+
+
+Producer-Consumer solution using threads in Java
+
+
+
+
+Problem 
+To make sure that the producer won’t try to add data into the buffer if it’s full and that the consumer won’t try to remove data from an empty buffer.
+Solution 
+The producer is to either go to sleep or discard data if the buffer is full. The next time the consumer removes an item from the buffer, it notifies the producer, who starts to fill the buffer again. In the same way, the consumer can go to sleep if it finds the buffer to be empty. The next time the producer puts data into the buffer, it wakes up the sleeping consumer. 
+An inadequate solution could result in a deadlock where both processes are waiting to be awakened. 
+
+
+PDF generate using JAVA:
+
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+public class GeneratePdf
+{
+   public static void main(String args[])
+   {
+       Document doc = new Document();
+       try
+       {
+           PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("/home/nandani/Downloads/Motivation.pdf"));
+           System.out.println("PDF created.");
+           doc.open();
+           doc.add(new Paragraph("Hie Its doc created for generate pdf using java."));
+           doc.close();
+           writer.close();
+       }
+       catch (DocumentException e)
+       {
+           e.printStackTrace();
+       }
+       catch (FileNotFoundException e)
+       {
+           e.printStackTrace();
+       }
+   }
+}

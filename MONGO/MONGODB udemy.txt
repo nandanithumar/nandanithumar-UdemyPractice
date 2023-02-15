@@ -1,0 +1,659 @@
+﻿db.products.insertOne({name:"book",price:29})
+
+
+db.products.find()
+
+
+db.products.find().pretty()
+—--------------------------------------------------------------------------------------------------------------------------
+
+
+db.flights.insertOne({ "departureairport":"muc",
+... "arrivalairport":"sfo",
+... "aircraft":"airbusa380",
+... "distance":12000,
+... "intercontinental":true
+... },
+—--------------------------------------------------------------------------------------------------------------------------
+
+
+db.flights.insertMany([{ "departureairport":"muc",
+... "arrivalairport":"sfo",
+... "aircraft":"airbusa380",
+... "distance":1400,
+... "intercontinental":true
+... },
+db.flights.insertOne({ "departureairport":"muc",
+... "arrivalairport":"sfo",
+... "aircraft":"airbusa380",
+... "distance":1200,
+... "intercontinental":true
+... }])
+
+
+—--------------------------------------------------------------------------------------------------------------------------
+
+
+db.flights.updateMany({},{$set:{marker:"delete2"}})
+db.flights.updateOne({distance:1200},{$set:{marker:"delete1"}})
+
+
+—--------------------------------------------------------------------------------------------------------------------------
+shop> db.flights.find().forEach((flightData)=>{printjson(flightData)})
+{
+  _id: ObjectId("63d7574ce89a54578be28b35"),
+  departureairport: 'muc',
+  arrivalairport: 'sfo',
+  aircraft: 'airbusa380',
+  distance: 12000,
+  intercontinental: true,
+  marker: 'delete1'
+}
+{
+  _id: ObjectId("63d75ee7e89a54578be28b36"),
+  arrival: 'sfo',
+  aircraft: 'airbusa120',
+  distanse: 12000,
+  marker: 'delete2'
+}
+{
+  _id: ObjectId("63d75ee7e89a54578be28b37"),
+  arrival: 'sgo',
+  aircraft: 'ale',
+  distance: 137,
+  marker: 'delete2'
+}
+
+
+—--------------------------------------------------------------------------------------------------------------------------
+
+
+Projection means filtering data 
+
+
+shop>db.flights.find({},{distance:1,marker:1})
+
+
+[
+  {
+    _id: ObjectId("63d7574ce89a54578be28b35"),
+    distance: 12000,
+    marker: 'delete1'
+  },
+  { _id: ObjectId("63d75ee7e89a54578be28b36"), marker: 'delete2' },
+  {
+    _id: ObjectId("63d75ee7e89a54578be28b37"),
+    distance: 137,
+    marker: 'delete2'
+  }
+]
+
+
+—--------------------------------------------------------------------------------------------------------------------------
+
+
+EMBEDDED DOCUMENT
+
+
+db.flights.updateMany({},{$set : {description: {current:false, last_departure:”one hour ago”}}})
+
+
+shop> db.flights.find().pretty()
+[
+  {
+    _id: ObjectId("63d7574ce89a54578be28b35"),
+    departureairport: 'muc',
+    arrivalairport: 'sfo',
+    aircraft: 'airbusa380',
+    distance: 12000,
+    intercontinental: true,
+    marker: 'delete1',
+    description: { current: false, last_departure: 'one hour ago' }
+  },
+  {
+    _id: ObjectId("63d75ee7e89a54578be28b36"),
+    arrival: 'sfo',
+    aircraft: 'airbusa120',
+    distanse: 12000,
+    marker: 'delete2',
+    description: { current: false, last_departure: 'one hour ago' }
+  },
+  {
+    _id: ObjectId("63d75ee7e89a54578be28b37"),
+    arrival: 'sgo',
+    aircraft: 'ale',
+    distance: 137,
+    marker: 'delete2',
+    description: { current: false, last_departure: 'one hour ago' }
+  }
+]
+
+
+—-----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+HOW TO READ EMBEDDED DATA 
+
+
+shop> db.flights.find({"description.current":true})
+
+
+shop> db.flights.find({"description.current":false})
+[
+  {
+    _id: ObjectId("63d7574ce89a54578be28b35"),
+    departureairport: 'muc',
+    arrivalairport: 'sfo',
+    aircraft: 'airbusa380',
+    distance: 12000,
+    intercontinental: true,
+    marker: 'delete1',
+    description: { current: false, last_departure: 'one hour ago' }
+  },
+  {
+    _id: ObjectId("63d75ee7e89a54578be28b36"),
+    arrival: 'sfo',
+    aircraft: 'airbusa120',
+    distanse: 12000,
+    marker: 'delete2',
+    description: { current: false, last_departure: 'one hour ago' }
+  },
+  {
+    _id: ObjectId("63d75ee7e89a54578be28b37"),
+    arrival: 'sgo',
+    aircraft: 'ale',
+    distance: 137,
+    marker: 'delete2',
+    description: { current: false, last_departure: 'one hour ago' }
+  }
+]
+
+
+—--------------------------------------------------------------------------------------------------------------------------
+patient> db.patient.insertMany([{ name: "alaraj", lname: "patel", age: 19, history: [{ diesease: "cold", tratement: "medicines" }] }, { name: "charmy", lname: "mistry", age: 21, history: [{ diesease: "fever", tratement: "injection" }] }, { name: "dev", lname: "trambadia", age: 26, history: [{ diesease: "caugh", tratement: "bottle & injection" }] }])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("63d78317e89a54578be28b39"),
+    '1': ObjectId("63d78317e89a54578be28b3a"),
+    '2': ObjectId("63d78317e89a54578be28b3b")
+  }
+}
+patient> db.patient.find().pretty()
+[
+  {
+    _id: ObjectId("63d782aee89a54578be28b38"),
+    name: 'raj',
+    lname: 'patel',
+    age: 21,
+    history: [ { diesease: 'cold', tratement: 'medicines' } ]
+  },
+  {
+    _id: ObjectId("63d78317e89a54578be28b39"),
+    name: 'alaraj',
+    lname: 'patel',
+    age: 19,
+    history: [ { diesease: 'cold', tratement: 'medicines' } ]
+  },
+  {
+    _id: ObjectId("63d78317e89a54578be28b3a"),
+    name: 'charmy',
+    lname: 'mistry',
+    age: 21,
+    history: [ { diesease: 'fever', tratement: 'injection' } ]
+  },
+  {
+    _id: ObjectId("63d78317e89a54578be28b3b"),
+    name: 'dev',
+    lname: 'trambadia',
+    age: 26,
+    history: [ { diesease: 'caugh', tratement: 'bottle & injection' } ]
+  }
+]
+—------------------------------------------------------------------------------------------------------------------
+patient> db.patient.updateOne({lname:"mistry"},{$set : {name:"dev",age:19,history: [{diesease:"fever" , tratement:"medicine"}]}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+patient> 
+—---------------------------------------------------------------------------------------------------------------------
+Find age greater than 10
+
+
+patient> db.patient.find({age:{$gt: 10}})
+[
+  {
+    _id: ObjectId("63d782aee89a54578be28b38"),
+    name: 'raj',
+    lname: 'patel',
+    age: 21,
+    history: [ { diesease: 'cold', tratement: 'medicines' } ]
+  },
+  {
+    _id: ObjectId("63d78317e89a54578be28b39"),
+    name: 'alaraj',
+    lname: 'patel',
+    age: 19,
+    history: [ { diesease: 'cold', tratement: 'medicines' } ]
+  },
+  {
+    _id: ObjectId("63d78317e89a54578be28b3a"),
+    name: 'dev',
+    lname: 'mistry',
+    age: 19,
+    history: [ { diesease: 'fever', tratement: 'medicine' } ]
+  },
+  {
+    _id: ObjectId("63d78317e89a54578be28b3b"),
+    name: 'dev',
+    lname: 'trambadia',
+    age: 26,
+    history: [ { diesease: 'caugh', tratement: 'bottle & injection' } ]
+  }
+]
+
+
+
+
+Delete data whose history who have fever
+
+
+
+
+patient> db.patient.deleteMany({'history.diesease':'cold'})
+{ acknowledged: true, deletedCount: 2 }
+
+
+—-------------------------------------------------------------------------------------------------------------------------
+
+
+writeConcern
+
+
+patient> db.patient.insertOne({name:"raja",lname:"patel", age:21, history: [{diesease:"cold" , tratement:"medicines"}]}, {writeConcern: {w: 1,j: true}})
+{
+  acknowledged: true,
+  insertedId: ObjectId("63d89e3ae3320ba88aa926d1")
+}
+patient> 
+
+
+
+
+
+
+How to solve duplicate key error
+
+
+patient> db.patient.insertOne({name:"nandani",age:21,_id:1})
+{ acknowledged: true, insertedId: 1 }
+patient> db.patient.insertOne({name:"nanu",age:21,_id:1})
+MongoServerError: E11000 duplicate key error collection: patient.patient index: _id_ dup key: { _id: 1 }
+patient> db.patient.insertMany([{name:"nanu",age:21,_id:1}, {name:"dev",age:18,_id:2}],{ordered:false})
+Uncaught:
+MongoBulkWriteError: E11000 duplicate key error collection: patient.patient index: _id_ dup key: { _id: 1 }
+Result: BulkWriteResult {
+  result: {
+    ok: 1,
+    writeErrors: [
+      WriteError {
+        err: {
+          index: 0,
+          code: 11000,
+          errmsg: 'E11000 duplicate key error collection: patient.patient index: _id_ dup key: { _id: 1 }',
+          errInfo: undefined,
+          op: { name: 'nanu', age: 21, _id: 1 }
+        }
+      }
+    ],
+    writeConcernErrors: [],
+    insertedIds: [ { index: 0, _id: 1 }, { index: 1, _id: 2 } ],
+    nInserted: 1,
+    nUpserted: 0,
+    nMatched: 0,
+    nModified: 0,
+    nRemoved: 0,
+    upserted: []
+  }
+}
+patient> 
+
+
+
+
+
+
+
+
+
+
+
+
+HOW TO IMPORT DATABASE
+
+
+nandani@administrator-OptiPlex-3050:~/Downloads$ mongoimport tv-shows.json -d movieData -c movies --jsonArray --drop
+2023-01-31T12:08:44.884+0530        connected to: mongodb://localhost/
+2023-01-31T12:08:44.884+0530        dropping: movieData.movies
+2023-01-31T12:08:44.917+0530        240 document(s) imported successfully. 0 document(s) failed to import.
+
+
+movieData> db.moviesData.find({"rating.average": {$gt: 6},runtime: {$lt: 100}}).pretty()
+
+
+—--------------------------------------------------------------------------------------------------------------------------
+
+
+INCREMENT OR DECREMENT ANY DATA,min max and mul
+
+
+db.movies.updateOne({ _id: ObjectId("63d8b7744821433c02a1842e") }, { $inc: { runtime: 10 } })
+
+
+movieData> db.movies.updateOne({ _id: ObjectId("63d8b7744821433c02a1842e") }, { $mul: { runtime: 10 } })
+
+
+movieData> db.movies.updateOne({ _id: ObjectId("63d8b7744821433c02a1842e") }, { $min: { runtime: 10 } })
+
+
+movieData> db.movies.updateOne({ _id: ObjectId("63d8b7744821433c02a1842e") }, { $max: { runtime: 10 } })
+
+
+movieData> db.movies.updateMany({ },{ rename: {age:”total_age”}})
+
+
+
+
+—----------------------------------------------------------------------------------------------------------------------------
+
+
+INDEXES:
+
+
+contectData> db.contects.explain("executionStats").find({"dob.age":{$gt:60}})
+{
+  explainVersion: '1',
+  queryPlanner: {
+    namespace: 'contectData.contects',
+    indexFilterSet: false,
+    parsedQuery: { 'dob.age': { '$gt': 60 } },
+    queryHash: '08155E45',
+    planCacheKey: '08155E45',
+    maxIndexedOrSolutionsReached: false,
+    maxIndexedAndSolutionsReached: false,
+    maxScansToExplodeReached: false,
+    winningPlan: {
+      stage: 'COLLSCAN',
+      filter: { 'dob.age': { '$gt': 60 } },
+      direction: 'forward'
+    },
+    rejectedPlans: []
+  },
+  executionStats: {
+    executionSuccess: true,
+    nReturned: 1222,
+    executionTimeMillis: 3,
+    totalKeysExamined: 0,
+    totalDocsExamined: 5000,
+    executionStages: {
+      stage: 'COLLSCAN',
+      filter: { 'dob.age': { '$gt': 60 } },
+      nReturned: 1222,
+      executionTimeMillisEstimate: 0,
+      works: 5002,
+      advanced: 1222,
+      needTime: 3779,
+      needYield: 0,
+      saveState: 5,
+      restoreState: 5,
+      isEOF: 1,
+      direction: 'forward',
+      docsExamined: 5000
+    }
+  },
+  command: {
+    find: 'contects',
+    filter: { 'dob.age': { '$gt': 60 } },
+    '$db': 'contectData'
+  },
+  serverInfo: {
+    host: 'administrator-OptiPlex-3050',
+    port: 27017,
+    version: '6.0.4',
+    gitVersion: '44ff59461c1353638a71e710f385a566bcd2f547'
+  },
+  serverParameters: {
+    internalQueryFacetBufferSizeBytes: 104857600,
+    internalQueryFacetMaxOutputDocSizeBytes: 104857600,
+    internalLookupStageIntermediateDocumentMaxSizeBytes: 104857600,
+    internalDocumentSourceGroupMaxMemoryBytes: 104857600,
+    internalQueryMaxBlockingSortMemoryUsageBytes: 104857600,
+    internalQueryProhibitBlockingMergeOnMongoS: 0,
+    internalQueryMaxAddToSetBytes: 104857600,
+    internalDocumentSourceSetWindowFieldsMaxMemoryBytes: 104857600
+  },
+  ok: 1
+}
+contectData> 
+
+
+
+
+contectData> db.contects.createIndex({"dob.age":1})
+dob.age_1
+contectData> db.contects.explain("executionStats").find({"dob.age":{$gt:60}})
+{
+  explainVersion: '1',
+  queryPlanner: {
+    namespace: 'contectData.contects',
+    indexFilterSet: false,
+    parsedQuery: { 'dob.age': { '$gt': 60 } },
+    queryHash: '08155E45',
+    planCacheKey: '3F4F0F60',
+    maxIndexedOrSolutionsReached: false,
+    maxIndexedAndSolutionsReached: false,
+    maxScansToExplodeReached: false,
+    winningPlan: {
+      stage: 'FETCH',
+      inputStage: {
+        stage: 'IXSCAN',
+        keyPattern: { 'dob.age': 1 },
+        indexName: 'dob.age_1',
+        isMultiKey: false,
+        multiKeyPaths: { 'dob.age': [] },
+        isUnique: false,
+        isSparse: false,
+        isPartial: false,
+        indexVersion: 2,
+        direction: 'forward',
+        indexBounds: { 'dob.age': [ '(60, inf.0]' ] }
+      }
+    },
+    rejectedPlans: []
+  },
+  executionStats: {
+    executionSuccess: true,
+    nReturned: 1222,
+    executionTimeMillis: 2,
+    totalKeysExamined: 1222,
+    totalDocsExamined: 1222,
+    executionStages: {
+      stage: 'FETCH',
+      nReturned: 1222,
+      executionTimeMillisEstimate: 0,
+      works: 1223,
+      advanced: 1222,
+      needTime: 0,
+      needYield: 0,
+      saveState: 1,
+      restoreState: 1,
+      isEOF: 1,
+      docsExamined: 1222,
+      alreadyHasObj: 0,
+      inputStage: {
+        stage: 'IXSCAN',
+        nReturned: 1222,
+        executionTimeMillisEstimate: 0,
+        works: 1223,
+        advanced: 1222,
+        needTime: 0,
+        needYield: 0,
+        saveState: 1,
+        restoreState: 1,
+        isEOF: 1,
+        keyPattern: { 'dob.age': 1 },
+        indexName: 'dob.age_1',
+        isMultiKey: false,
+        multiKeyPaths: { 'dob.age': [] },
+        isUnique: false,
+        isSparse: false,
+        isPartial: false,
+        indexVersion: 2,
+        direction: 'forward',
+        indexBounds: { 'dob.age': [ '(60, inf.0]' ] },
+        keysExamined: 1222,
+        seeks: 1,
+        dupsTested: 0,
+        dupsDropped: 0
+      }
+    }
+  },
+  command: {
+    find: 'contects',
+    filter: { 'dob.age': { '$gt': 60 } },
+    '$db': 'contectData'
+  },
+  serverInfo: {
+    host: 'administrator-OptiPlex-3050',
+    port: 27017,
+    version: '6.0.4',
+    gitVersion: '44ff59461c1353638a71e710f385a566bcd2f547'
+  },
+  serverParameters: {
+    internalQueryFacetBufferSizeBytes: 104857600,
+    internalQueryFacetMaxOutputDocSizeBytes: 104857600,
+    internalLookupStageIntermediateDocumentMaxSizeBytes: 104857600,
+    internalDocumentSourceGroupMaxMemoryBytes: 104857600,
+    internalQueryMaxBlockingSortMemoryUsageBytes: 104857600,
+    internalQueryProhibitBlockingMergeOnMongoS: 0,
+    internalQueryMaxAddToSetBytes: 104857600,
+    internalDocumentSourceSetWindowFieldsMaxMemoryBytes: 104857600
+  },
+  ok: 1
+}
+contectData> 
+
+
+
+
+
+
+—-------------------------------------------------------------------------------------------------------------------------
+
+
+TTL TIME TO LIVE
+
+
+ontectData> db.sessions.createIndex({created:1},{expireAfterSeconds:5})
+created_1
+contectData> db.sessions.find()
+
+
+contectData> db.sessions.insertOne({data:"dfef",created:new Date()})
+{
+  acknowledged: true,
+  insertedId: ObjectId("63d9044e2a3c3113dd84c501")
+}
+contectData> db.sessions.insertOne({data:"dfeffdgfgdgdg",created:new Date()})
+{
+  acknowledged: true,
+  insertedId: ObjectId("63d904552a3c3113dd84c502")
+}
+contectData> db.sessions.insertOne({data:"dfeffdggregrgregrefgdgdg",created:new Date()})
+{
+  acknowledged: true,
+  insertedId: ObjectId("63d904592a3c3113dd84c503")
+}
+contectData> db.sessions.find().pretty()
+[
+  {
+    _id: ObjectId("63d9044e2a3c3113dd84c501"),
+    data: 'dfef',
+    created: ISODate("2023-01-31T12:06:38.273Z")
+  },
+  {
+    _id: ObjectId("63d904552a3c3113dd84c502"),
+    data: 'dfeffdgfgdgdg',
+    created: ISODate("2023-01-31T12:06:45.653Z")
+  },
+  {
+    _id: ObjectId("63d904592a3c3113dd84c503"),
+    data: 'dfeffdggregrgregrefgdgdg',
+    created: ISODate("2023-01-31T12:06:49.953Z")
+  }
+]
+contectData> db.sessions.find().pretty()
+
+
+contectData> 
+
+
+
+
+
+
+—------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+PIPELINE
+
+
+movieData> db.movies.aggregate([
+...   // First Stage
+...   { $project: { _id: 0, genres: 1, imdb: 1, title: 1 } },
+...   // Second Stage
+...   { $unwind: "$genres" },
+...   // Third Stage
+...   { $group:
+...     { _id: "$genres",
+...       averageGenreRating: { $avg: "$imdb.rating" }
+...     }
+...   },
+...    // Fourth Stage
+...    { $sort: { averageGenreRating: -1 } }
+... 
+... ])
+[
+  { _id: 'Crime', averageGenreRating: null },
+  { _id: 'Thriller', averageGenreRating: null },
+  { _id: 'Supernatural', averageGenreRating: null },
+  { _id: 'Fantasy', averageGenreRating: null },
+  { _id: 'Medical', averageGenreRating: null },
+  { _id: 'Western', averageGenreRating: null },
+  { _id: 'War', averageGenreRating: null },
+  { _id: 'Romance', averageGenreRating: null },
+  { _id: 'History', averageGenreRating: null },
+  { _id: 'Mystery', averageGenreRating: null },
+  { _id: 'Sports', averageGenreRating: null },
+  { _id: 'Espionage', averageGenreRating: null },
+  { _id: 'Science-Fiction', averageGenreRating: null },
+  { _id: 'Adventure', averageGenreRating: null },
+  { _id: 'Comedy', averageGenreRating: null },
+  { _id: 'Family', averageGenreRating: null },
+  { _id: 'Action', averageGenreRating: null },
+  { _id: 'Legal', averageGenreRating: null },
+  { _id: 'Horror', averageGenreRating: null },
+  { _id: 'Anime', averageGenreRating: null }
+]
+Type "it" for more
+movieData>

@@ -1,0 +1,122 @@
+﻿Database list \l
+Switch database \c 
+List of tables \dt
+Describe table \d
+-i -u postgres
+Psql
+Sudo -u postgres psql
+
+
+CREATE TABLE status(
+state_id INT,
+emp_id INT,
+PRIMARY KEY(state_id),
+CONSTRAINT fk_emp
+      FOREIGN KEY(emp_id) 
+          REFERENCES emp(emp_id),
+);
+
+
+CREATE TABLE emp (
+emp_id INT GENERATED ALWAYS AS IDENTITY,
+First_name VARCHAR(150),
+last_name VARCHAR(150),
+emp_email VARCHAR(100) NOT NULL,
+birth_date DATE,
+contact_no NUMERIC UNIQUE NOT NULL,
+hire_date DATE,
+emp_type VARCHAR(100),
+state_id INT,
+PRIMARY KEY(emp_id)
+);
+
+
+
+
+CREATE TABLE salary
+(
+salary_id INT GENERATED ALWAYS AS IDENTITY,
+emp_id INT ,
+salary_amount NUMERIC NOT NULL DEFAULT 0,
+bonus INT,
+from_date DATE,
+to_date DATE,
+PRIMARY KEY(salary_id),
+CONSTRAINT fk_emp
+      FOREIGN KEY(emp_id) 
+          REFERENCES emp(emp_id)
+);
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE leave
+(
+leave_id INT GENERATED ALWAYS AS IDENTITY,
+emp_id INT,
+date DATE,
+reason VARCHAR(250) NOT NULL,
+req_approval BOOLEAN,
+salary_cut INT,
+salary_id INT,
+PRIMARY KEY (leave_id),
+CONSTRAINT fk_emp
+      FOREIGN KEY(emp_id) 
+          REFERENCES emp(emp_id),
+CONSTRAINT fk_sal
+      FOREIGN KEY(salary_id) 
+          REFERENCES salary(salary_id),
+state_id INT,
+CONSTRAINT fk_state
+      FOREIGN KEY(state_id) 
+          REFERENCES status(state_id)
+
+
+
+
+);
+
+
+CREATE TABLE holiday
+(
+h_id INT GENERATED ALWAYS AS IDENTITY,
+h_date DATE NOT NULL,
+emp_id INT,
+PRIMARY KEY (h_id),
+CONSTRAINT fk_h
+      FOREIGN KEY(emp_id) 
+          REFERENCES emp(emp_id)
+
+
+);
+
+
+
+
+
+
+
+
+CREATE TABLE project
+(
+p_id INT GENERATED ALWAYS AS IDENTITY,
+emp_id INT,
+p_name VARCHAR(150),
+start_date DATE,
+end_date DATE,
+description VARCHAR(250) NOT NULL,
+PRIMARY KEY (p_id),
+CONSTRAINT fk_emp
+      FOREIGN KEY(emp_id) 
+          REFERENCES emp(emp_id),
+state_id INT,
+CONSTRAINT fk_state
+      FOREIGN KEY(state_id) 
+          REFERENCES status(state_id)
+);

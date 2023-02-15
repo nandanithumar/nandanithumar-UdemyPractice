@@ -1,0 +1,455 @@
+﻿jshell> System.out.println("Hi world");
+Hi world
+
+
+jshell> int myfirstvariable=(5*2)-3+9;
+myfirstvariable ==> 16
+
+
+IF-ELSE
+public class Helloworld{
+    public static void main(String args[]){
+        
+        boolean isalean=false;
+        if(isalean==false){
+            System.out.println("hi");
+            System.out.println("its alean");
+        }
+        int topscore=92;
+        if (topscore>90){
+            System.out.println("its A gread");
+        }
+        int secondscore=82;
+        if(secondscore>80){
+            System.out.println("Its B gread");        }
+        if((topscore>secondscore)||(secondscore>85)){
+            System.out.print("Its higher second class");
+        }
+    }
+}
+
+
+METHOD
+public class Helloworld{
+    public static void main(String args[]){
+        int a=50;
+        int b=80;
+        int c=89;
+        System.out.println("lets calculate total of every subject for xyz student");
+        total_marks(a,b,c);
+    }
+public static void total_marks(int a, int b, int c){
+    
+    int total=a+b+c;
+    System.out.println(total);
+}        
+        
+}
+
+
+public class Helloworld{
+    public static void main(String args[]){
+        System.out.println("lets calculate total of every subject for xyz student");
+        total_marks();
+    }
+public static void total_marks(){
+    int maths=50;
+    int science=80;
+    int eng=89;
+    int total=maths+science+eng;
+    System.out.println(total);
+}        
+        
+}
+
+
+
+
+public class Helloworld{
+    public static void main(String args[]){
+        System.out.println("lets calculate total of every subject for xyz student");
+        int   total=total_marks();
+        System.out.println(total);
+    }
+public static int total_marks(){
+    int maths=50;
+    int science=80;
+    int eng=89;
+    int total=maths+science+eng;
+   
+    return total;
+    
+}        
+        
+}
+
+
+Exercise:
+
+
+public class PositiveNegativeZero {
+    public static void checkNumber(int number){
+            if(number>0){
+                System.out.println("positive");
+            }
+            else if(number<0){
+                System.out.println("negative");
+            }
+            else{
+                System.out.println("zero");
+            }
+        }
+}
+====================================================================
+public class SpeedConverter {
+    public static long toMilesPerHour(double kilometerPerHour){
+        if(kilometerPerHour<0){
+            return -1;
+        }
+        else{
+        
+    
+        double Miles=(kilometerPerHour)/1.609;
+        long rounded = Math.round(Miles);
+        return rounded;
+            
+        }
+        
+        
+    }
+    public static void printConversion(double kilometerPerHour){
+        if(kilometerPerHour<0){
+            System.out.println("Invalid Value");
+        }
+        else{
+            long l=toMilesPerHour(kilometerPerHour);
+            System.out.println(kilometerPerHour+" km/h = "+l+" mi/h");
+            
+        }
+    }
+}
+=================================================================
+
+
+public class MegaBytesConverter {
+    public static void printMegaBytesAndKiloBytes(int kiloBytes){
+        if (kiloBytes<0){
+            System.out.println("Invalid Value");
+        }
+        else{
+            int m=kiloBytes/1024;
+            int k=kiloBytes%1024;
+            System.out.println(kiloBytes+" KB = "+m+" MB and "+k+" KB");
+        }
+    }
+ 
+}
+=======================================================================
+
+
+public class BarkingDog {
+    public static boolean shouldWakeUp(boolean barking, int hourOfDay){
+        if(hourOfDay<0 || hourOfDay>23){
+            return false;
+        }
+        else if (barking==true && (hourOfDay<8 || hourOfDay>22)){
+            return true;
+        
+        }
+        else{
+            return false;
+        }
+    }
+ 
+}
+========================================================================
+
+
+public class LeapYear {
+    public static boolean isLeapYear(int year){
+        if(year>=1 && year<=9999){
+            if(year%4==0){
+                 if(year%100==0){
+                     if (year%400==0){
+                        return true;
+                    }else return false;
+                }else return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
+ 
+}
+public class EqualSumChecker {
+    public static boolean hasEqualSum(int a, int b, int c){
+        if(a+b==c){
+            return true;
+        }
+        else return false;
+    }
+ 
+}
+========================================================================
+
+
+
+
+public class TeenNumberChecker {
+    public static boolean hasTeen(int a, int b, int c){
+        if (isTeen(a) || isTeen(b) || isTeen(c)){
+            return true;
+        
+        }else return false;
+    }
+    public static boolean isTeen(int x){
+        if(x>=13 && x<=19){
+            return true;
+        }
+        else return false;
+    }
+ 
+}
+========================================================================
+
+
+public class AreaCalculator {
+    public static double area(double radius){
+        if(radius<0){
+            return -1.0;
+        }
+        else{
+            double PI=Math.PI;
+            return(PI*radius*radius);
+        }
+        
+    }
+    public static double area(double x,double y){
+        if((x <0)||(y<0) ){
+            return -1.0;
+        }
+
+
+        else{
+            return (x*y);
+        }
+        
+        
+    }
+     
+}
+
+
+====================================================================
+
+
+public class MinutesToYearsDaysCalculator {
+    public static void printYearsAndDays(long minutes){
+        if(minutes<0){
+            System.out.println("Invalid Value");
+            
+        }else{
+            long h=minutes/60;
+            long d=h/24;
+            long y= d/365;
+            long r=d-(y*365);
+            
+            System.out.println(minutes+" min = "+y+" y and "+r+" d");
+        }
+        
+    }
+}
+======================================================================
+
+
+public class NumberInWord {
+    public static void printNumberInWord(int Number){
+        String word;
+        word = switch(Number){
+            case 0->{yield "ZERO";}
+            case 1->{yield "ONE";}
+            case 2->{yield "TWO";}
+            case 3->{yield "THREE";}
+            case 4->{yield"FOUR";}
+            case 5->{yield "FIVE";}
+            case 6->{yield "SIX";}
+            case 7->{yield "SEVEN";}
+            case 8->{yield "EIGHT";}
+            case 9->{yield"NINE";}
+            default->{yield "OTHER";}
+        };
+        System.out.println(word);
+        
+    }       
+
+
+
+
+
+
+    // write your code here
+}
+
+
+=======================================================================
+
+
+
+
+
+
+
+
+
+
+package com.mycompany.helloworld;
+import java.util.Scanner;
+public class loop{
+    public static void main(String args[]){
+    int count=1;
+    int sum=0;
+    while(count<=5) {
+        Scanner sc=new Scanner(System.in);
+        String s=sc.nextLine();
+        try{
+            int s1=Integer.parseInt(s);
+            count++;
+            sum+=s1;
+        }catch(NumberFormatException e){
+            System.out.println("invalid data");
+        }
+
+
+    }
+    System.out.println("sum of five number is" + sum);
+    }
+}
+
+
+  
+
+
+
+
+
+MAIN.JAVA
+
+
+//package com.mycompany.banks;
+public class Main {
+
+
+   public static void main(String[] args) {
+//        bank b=new bank("123345",23435, "nandani", "nnupatel@gmail.com", "9879958056");
+//        System.out.println(b.getAccno());
+
+
+       Bank b = new Bank();
+       //System.out.println(b.getAmount());
+
+
+       b.setAccno("12345");
+
+
+
+
+
+
+
+
+
+
+   }
+}
+
+
+
+
+BANK.JAVA
+
+
+public class Bank {
+   private String accno = "12345";
+   private double amount = 1223434;
+   private String name = "nandani";
+   private String email = "nthumar@argusoft.com";
+   private String phone = "9879958056";
+
+
+//    public Bank(){
+//        System.out.println("empty constructor");
+//    }
+
+
+
+
+//    public bank(String accno, double amount, String name, String email, String phone)
+//    {
+//        System.out.println("details of constructor");
+//        this.accno = accno;
+//        this.amount = amount;
+//        this.name = name;
+//        this.email = email;
+//        this.phone = phone;
+//    }
+
+
+   public String getAccno() {
+       return accno;
+   }
+
+
+   public void setAccno(String accno) {
+       this.accno = accno;
+   }
+
+
+   public double getAmount() {
+       return amount;
+   }
+
+
+   public void setAmount(double amount) {
+       this.amount = amount;
+   }
+
+
+   public String getName() {
+       return name;
+   }
+
+
+   public void setName(String name) {
+       this.name = name;
+   }
+
+
+   public String getEmail() {
+       return email;
+   }
+
+
+   public void setEmail(String email) {
+       this.email = email;
+   }
+
+
+   public String getPhone() {
+       return phone;
+   }
+
+
+   public void setPhone(String phone) {
+       this.phone = phone;
+   }
+
+
+
+
+
+
+}

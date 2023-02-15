@@ -1,0 +1,130 @@
+﻿1. class Simple{  
+2.     public static void main(String args[]){  
+3.      System.out.println("Hello Java");  
+4.     }  
+5. }  
+
+
+1. public class Simple{    
+2. public static void main(String[] args){    
+3. int a=10;    
+4. int b=10;    
+5. int c=a+b;    
+6. System.out.println(c);    
+7. }  
+8. }    
+
+
+Widening
+1. public class Simple{  
+2. public static void main(String[] args){  
+3. int a=10;  
+4. float f=a;  
+5. System.out.println(a);  
+6. System.out.println(f);  
+7. }}  
+
+
+1. class Simple{  
+2. public static void main(String[] args){  
+3. //Overflow  
+4. int a=130;  
+5. byte b=(byte)a;  
+6. System.out.println(a);  
+7. System.out.println(b);  
+8. }}  
+
+
+CONTROL STATEMENTS:
+
+
+1. public class IfExample {  
+2. public static void main(String[] args) {  
+3.     //defining an 'age' variable  
+4.     int age=20;  
+5.     //checking the age  
+6.     if(age>18){  
+7.         System.out.print("Age is greater than 18");  
+8.     }  
+9. }  
+10. }  
+
+
+=====================================================================
+
+
+1. public class SwitchExample {  
+2. public static void main(String[] args) {  
+3.     //Declaring a variable for switch expression  
+4.     int number=20;  
+5.     //Switch expression  
+6.     switch(number){  
+7.     //Case statements  
+8.     case 10: System.out.println("10");  
+9.     break;  
+10.     case 20: System.out.println("20");  
+11.     break;  
+12.     case 30: System.out.println("30");  
+13.     break;  
+14.     //Default case statement  
+15.     default:System.out.println("Not in 10, 20 or 30");  
+16.     }  
+17. }  
+18. }  
+==================================================================
+
+
+1. public class NestedForExample {  
+2. public static void main(String[] args) {  
+3. //loop of i  
+4. for(int i=1;i<=3;i++){  
+5. //loop of j  
+6. for(int j=1;j<=3;j++){  
+7.         System.out.println(i+" "+j);  
+8. }//end of i  
+9. }//end of j  
+10. }  
+11. }  
+===================================================================
+
+
+1. public class WhileExample {  
+2. public static void main(String[] args) {  
+3.     int i=1;  
+4.     while(i<=10){  
+5.         System.out.println(i);  
+6.     i++;  
+7.     }  
+8. }  
+9. }  
+========================================================================
+
+
+1. public class BreakExample {  
+2. public static void main(String[] args) {  
+3.     //using for loop  
+4.     for(int i=1;i<=10;i++){  
+5.         if(i==5){  
+6.             //breaking the loop  
+7.             break;  
+8.         }  
+9.         System.out.println(i);  
+10.     }  
+11. }  
+12. }  
+====================================================================
+
+
+1. public class ContinueExample {  
+2. public static void main(String[] args) {  
+3.     //for loop  
+4.     for(int i=1;i<=10;i++){  
+5.         if(i==5){  
+6.             //using continue statement  
+7.             continue;//it will skip the rest statement  
+8.         }  
+9.         System.out.println(i);  
+10.     }  
+11. }  
+12. }  
+===============================================================

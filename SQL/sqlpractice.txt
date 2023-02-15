@@ -1,0 +1,118 @@
+﻿Student        
+Stu_id (PK)                
+Name NN
+ 
+
+
+Stu_sub                                                
+Stu_id(FK) NN
+Sub_id(FK) NN
+
+
+Subject
+Sub_id (PK)
+Name NN
+Credit
+
+
+Teacher_subject
+Sub_id(FK)
+Teacher_id(FK)
+
+
+Teacher 
+Teacher_id(PK)
+Name NN
+Phone_no UNIQUE 
+
+
+Q.1 STUDENT NAME WHERE TEACHER PHONE NO IS NOT NULL
+
+
+Select name from student  where stu_id IN ( select stu_id from stu_sub where sub_id IN (select sub_id from teacher_subject where teacher_id IN (select teacher_id from teacher where phone_no is NOT NULL)));
+
+
+
+
+
+
+Q.2 STUDENT NAME WHERE SUBJECT NAME = MATHS
+
+
+Select student.name from stu_sub
+Join student on stu_sub.stu_id=student.stu_id
+Join subject on stu_sub.sub_id=subject.sub_id
+Where subject.name=”mathematics”;
+
+
+
+
+
+
+Q.3 CREATE PRIMARY KEY FOR SUB_TEACHER TABLE
+
+
+PRIMARY KEY (sub_id,teacher_id),
+
+
+Q.4 SUPPOSE WE FORGOT TO ADD PRIMARY KEY IN TABLE AND NOW THEY HAVE DUPLICATE ENTRY HOW WE CAN FIX DATA OF THAT TABLE.
+
+
+–TO DELETE ALL DUPLICATES FROM OUR DATA
+DELETE FROM table_name
+WHERE (id) IN (
+SELECT DISTINCT id FROM table_name
+GROUP BY id
+HAVING COUNT(*) > 1
+);
+
+
+–DELETE ALL DUPLICATE BUT ONE IS STILL IN DATABASE
+WITH duplicate AS (
+SELECT  col1,col2 ROW_NUMBER() OVER (PARTITION BY col1,col2  ORDER BY col1) as row_num
+FROM my_table
+)
+DELETE FROM duplicate
+WHERE row_num > 1;
+
+
+
+
+
+
+Q.5 
+TABLE A
+A_ID 
+B_ID
+
+
+TABLE B
+B_ID
+A_ID
+
+
+SHOULD WE CREATE TABLE LIKE THIS IF WE CAN THAN HOW CAN WE DO IT?
+
+
+Yes, it is possible to create two tables in SQL where the primary key of one table is a foreign key in the second table, and vice versa. This is called a circular or reciprocal relationship. However, it is not a recommended practice as it can lead to data integrity issues and also be difficult to query.
+
+
+A circular relationship between tables can lead to data integrity issues because it creates a dependency between the two tables. If a row in one table is deleted or updated, it can affect the data in the other table and cause inconsistencies.
+
+
+
+
+
+
+Q.6 TRIGGER FOR DELETE EMPLOYEE AND ALSO DELETE ALL RELATED DATA FROM OTHER TABLES.
+
+
+CREATE TRIGGER remove_employee
+AFTER DELETE ON employee
+FOR EACH ROW
+BEGIN
+DELETE FROM leave WHERE emp_id=old.emp_id
+DELETE FROM projects WHERE emp_id=old.emp_id
+DELETE FROM holiday WHERE emp_id=old.emp_id
+DELETE FROM salary WHERE emp_id=old.emp_id
+END;
