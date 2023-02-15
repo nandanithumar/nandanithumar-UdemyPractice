@@ -63,8 +63,6 @@ public static void total_marks(){
 }
 
 
-
-
 public class Helloworld{
     public static void main(String args[]){
         System.out.println("lets calculate total of every subject for xyz student");
