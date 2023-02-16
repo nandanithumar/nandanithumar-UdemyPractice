@@ -980,3 +980,7 @@ Q.5 USER WHO LIKED ALL POSTS ON OURWEBSITE
 * GROUP  BY likes.user_id
 * HAVING num_likes = (SELECT Count(*)
 *                    FROM   photos);
+
+
+
+efjueifjhefuinjhefiehfwuiefjh
